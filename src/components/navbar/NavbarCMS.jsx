@@ -1,19 +1,14 @@
-import { IoMdHome } from "react-icons/io";
-import { Link } from "react-router-dom";
-
+import { linksCMS } from "../../constants/navbar";
+import { LinksNav } from "./LinksNav";
 export const NavbarCMS = () => {
+
   return (
-    <header className="flex items-center justify-between p-4 bg-white shadow-md">
-      <Link to="/">
-        <IoMdHome className="text-3xl" />
-        <span className="sr-only">Blog Logo</span>
-      </Link>
-      <nav>
-        <a className="mr-4" href="#">
-          About
-        </a>
-        <a href="#">Contact</a>
-      </nav>
-    </header>
+    <>
+      <header className="flex sticky top-0 items-center justify-between py-3 px-8 z-40 bg-white gap-2 shadow-md">
+        <div className="flex items-center gap-2">
+          <LinksNav links={linksCMS}/>
+        </div>
+      </header>
+    </>
   );
 };

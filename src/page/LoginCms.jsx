@@ -7,7 +7,6 @@ export const LoginCms = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm();
   const { login, authenticated } = useContext(AuthContext);
   const navigate = useNavigate();

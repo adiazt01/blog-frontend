@@ -1,46 +1,43 @@
 import { createContext, useEffect, useState } from "react";
-import { apiAuth } from "../api/axios";
-import { useNavigate,useLocation } from "react-router-dom";
+import Cookies from "js-cookie";
+import { api } from "../api/axios";
+import PropTypes from "prop-types";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      setAuthenticated(true);
-      apiAuth.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    }
-  }, []);
 
   const login = async (username, password) => {
-    const response = await apiAuth.post("/login", {
+    const response = await api.post("/admin/login", {
       username,
       password,
     });
-
     if (response.status === 200) {
-      localStorage.setItem("token", response.data.token);
-      apiAuth.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${response.data.token}`;
       setAuthenticated(true);
     }
   };
 
   const logout = async () => {
-    await apiAuth.post("/logout");
-    localStorage.removeItem('token');
-    delete apiAuth.defaults.headers.common['Authorization'];
+    await api.post("/admin/login");
+    delete api.defaults.headers.common["Authorization"];
     setAuthenticated(false);
   };
 
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      setAuthenticated(true);
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ login, logout, authenticated }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ login, logout, authenticated }}>
+      {children}
+    </AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
