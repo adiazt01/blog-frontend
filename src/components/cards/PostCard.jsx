@@ -9,7 +9,7 @@ import { ModalDeletePost } from "../modals/ModalDeletePost.jsx";
 
 export const PostCard = ({ post, admin }) => {
   const { id, title, createdAt, content, tags } = post;
-
+  console.log(id);
   return (
     <article
       key={id}
@@ -33,15 +33,15 @@ export const PostCard = ({ post, admin }) => {
         {admin && (
           <>
             <Link
-              to={`/admin/posts/${post.id}`}
+              to={`/admin/posts/${id}`}
               className="mt-8 w-32  gap-1 py-1 rounded flex flex-row items-center justify-center text-lg text-white bg-sky-800 font-semibold bg-black-500 transition duration-300 ease-in-out"
             >
               Edit Post
             </Link>
-            <ModalDeletePost id={post.id} />
+            <ModalDeletePost id={id} />
           </>
         )}
-        {!admin && <ReadMoreLink to={`/posts/${post.id}`} />}{" "}
+        {!admin && <ReadMoreLink id={id} />}{" "}
       </div>
     </article>
   );

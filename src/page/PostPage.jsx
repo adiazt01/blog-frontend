@@ -16,6 +16,7 @@ export const PostPage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       const post = await getPost(id);
+      console.log(post);
       setPost(post);
       setLoading(false);
     };
@@ -29,6 +30,8 @@ export const PostPage = () => {
       </div>
     );
   }
+
+  console.log(post);
 
   return (
     <div>
